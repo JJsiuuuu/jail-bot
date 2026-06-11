@@ -61,6 +61,7 @@ client.on('interactionCreate', async interaction => {
   if (!interaction.isChatInputCommand()) return;
 
   const { commandName, guild, member } = interaction;
+  const logsChannel = guild.channels.cache.find(c => c.name === 'logs');
 
   if (commandName === 'jail') {
     await interaction.deferReply({ flags: 64 });
@@ -113,6 +114,7 @@ client.on('interactionCreate', async interaction => {
       // Remove all roles and add Jailed
       await targetUser.roles.set([jailedRole.id], `Jailed by ${interaction.user.tag}`);
       await interaction.editReply(`✅ **${targetUser.user.tag}** has been jailed. Their ${currentRoles.length} role(s) have been removed.`);
+      if (logsChannel) logsChannel.send(`🔒 **${interaction.user.tag}** jailed **${targetUser.user.tag}**`);
     } catch (err) {
       console.error('Failed to update roles:', err);
       return interaction.editReply('❌ Failed to update roles. Check my permissions and role hierarchy.');
@@ -145,6 +147,7 @@ client.on('interactionCreate', async interaction => {
       await targetUser.roles.set(rolesToRestore, `Unjailed by ${interaction.user.tag}`);
       delete jailStore[guild.id][targetUser.id];
       await interaction.editReply(`✅ **${targetUser.user.tag}** has been unjailed and their ${rolesToRestore.length} role(s) restored.`);
+      if (logsChannel) logsChannel.send(`🔓 **${interaction.user.tag}** unjailed **${targetUser.user.tag}**`);
     } catch (err) {
       console.error('Failed to restore roles:', err);
       return interaction.editReply('❌ Failed to restore roles. Check my permissions and role hierarchy.');
