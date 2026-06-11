@@ -63,7 +63,7 @@ client.on('interactionCreate', async interaction => {
   const { commandName, guild, member } = interaction;
 
   if (commandName === 'jail') {
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferReply({ flags: 64 });
 
     const targetUser = interaction.options.getMember('user');
 
@@ -120,7 +120,7 @@ client.on('interactionCreate', async interaction => {
   }
 
   if (commandName === 'unjail') {
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferReply({ flags: 64 });
 
     const targetUser = interaction.options.getMember('user');
 
