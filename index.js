@@ -154,4 +154,14 @@ client.on('interactionCreate', async interaction => {
 
 client.login(TOKEN);
 const http = require('http');
-http.createServer((req, res) => res.end('Bot is running!')).listen(process.env.PORT || 3000);
+const server = http.createServer((req, res) => res.end('Bot is running!'));
+server.listen(process.env.PORT || 3000);
+
+setInterval(() => {
+  const url = 'https://jail-bot-rr8y.onrender.com';
+  http.get(url, (res) => {
+    console.log(`Self-ping: ${res.statusCode}`);
+  }).on('error', (err) => {
+    console.error('Self-ping error:', err.message);
+  });
+}, 14 * 60 * 1000);
