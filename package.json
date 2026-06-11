@@ -1,0 +1,13 @@
+{
+  "name": "jail-bot",
+  "version": "1.0.0",
+  "description": "Discord bot with /jail and /unjail slash commands",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.15.3",
+    "dotenv": "^17.4.2"
+  }
+}
